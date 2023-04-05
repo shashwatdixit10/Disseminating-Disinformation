@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<script>
+    $(document).ready(function(){
+        load_data();
+        function load_data(query){
+            $.ajax({
+                url:"/ajaxlivesearch",
+                method:"POST",
+                data:{query:query},
+                success:function(data){
+                    $('#result').html(data)
+                }
+            });
+        }
+        $("#search_text").keyup(function(){
+            var search = $(this).val();
+            if(search!=''){
+                load_data(search);
+            }else{
+                load_data();
+            }
+        });
+
+    })
+</script>
+
+
+<body>
+    <span>
+        <img src="{{url_for('static',filename='./images/vit-logo.png')}}" alt="" class="vit-logo">
+        <h1 class="team-name">Arithmetic Terror</h1>
+    </span>
+
+    <br><br><br>
+
+    <div class="main" style="text-align: center;">
+        <p>Enter The URL/Link:</p>
+
+        <span>
+            <input type="text" name="search_text" id = 'search_text' placeholder="eg. https://www.bbc.com/news" class="form-control url-input" style="width: 300px; margin-left: 40%;">
+        </span>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div class="container-fluid output">
+        <p>OUR ANALYSIS</p>
+        <br>
+        <div class="result" id="result" style="color: white;">
+
+        </div>
+
+    </div>
+
+    <script src="{{url_for('static',filename='script.js')}}"></script>
+    <script src="{{url_for('static',filename='background.js')}}"></script>
+
+
+    <!-- <div class="container mt-3">
+        <div class="d-flex justify-content-around bg-secondary mb-3">
+            <div class="p-2 bg-info">Flex item 1</div>
+            <div class="p-2 bg-warning">Flex item 2</div>
+            <div class="p-2 bg-primary">Flex item 3</div>
+            <div class="p-2 bg-primary">Flex item 3</div>
+        </div>
+    </div> -->
+    
+</body>
+</html>
